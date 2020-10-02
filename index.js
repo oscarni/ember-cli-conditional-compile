@@ -111,19 +111,13 @@ module.exports = {
       }
     });
 
-    if (this.enableCompile) {
-      excludes = excludes.concat(
-        /ember-cli-conditional-compile-features.js/
-      );
-    } else {
-      tree = replace(tree, {
-        files: [config.modulePrefix + '/initializers/ember-cli-conditional-compile-features.js'],
-        patterns: [{
-          match: /EMBER_CLI_CONDITIONAL_COMPILE_INJECTIONS/g,
-          replacement: JSON.stringify(config.featureFlags || {})
-        }]
-      });
-    }
+    tree = replace(tree, {
+      files: [config.modulePrefix + '/initializers/ember-cli-conditional-compile-features.js'],
+      patterns: [{
+        match: /EMBER_CLI_CONDITIONAL_COMPILE_INJECTIONS/g,
+        replacement: JSON.stringify(config.featureFlags || {})
+      }]
+    });
 
     return new Funnel(tree, {
       exclude: excludes,
